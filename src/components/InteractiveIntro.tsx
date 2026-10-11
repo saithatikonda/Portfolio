@@ -2,19 +2,19 @@ import { useState, useEffect } from 'react';
 import { Sparkles } from 'lucide-react';
 
 interface InteractiveIntroProps {
-  onComplete: () => void;
+  onComplete?: () => void;
   customPhotoUrl?: string | null;
 }
 
 export function InteractiveIntro({ onComplete }: InteractiveIntroProps) {
-  // Phase 1 milestones:
-  // Letter 1 ('S') emerges: 100ms
-  // Letter 2 ('S') emerges: 550ms
-  // Letter 3 ('K') emerges: 1000ms
-  // Dot ('.') emerges: 1350ms
-  // Phase 2: Assembly / Club into "SSK." + Radiant shockwave: 1600ms - 2200ms
-  // Phase 3: Sliding double-door reveal: 2200ms - 3200ms
-  // Phase 4: Unmount cleanup: 3300ms
+  // Phase 1: Letter-by-letter fly-in milestones
+  // Letter 1 ('S'): 150ms
+  // Letter 2 ('S'): 600ms
+  // Letter 3 ('K'): 1050ms
+  // Dot ('.'): 1400ms
+  // Phase 2: Assembly / Club into "SSK." + Shockwave: 1700ms - 2400ms
+  // Phase 3: Sliding double doors split open: 2400ms - 3400ms
+  // Phase 4: Fadeout overlay: 3400ms, unmount at 3800ms
   const [showS1, setShowS1] = useState(false);
   const [showS2, setShowS2] = useState(false);
   const [showK, setShowK] = useState(false);
@@ -25,36 +25,36 @@ export function InteractiveIntro({ onComplete }: InteractiveIntroProps) {
   const [fadeOut, setFadeOut] = useState(false);
 
   useEffect(() => {
-    // Phase 1: Letter-by-Letter fly-in sequence
-    const t1 = setTimeout(() => setShowS1(true), 100);
-    const t2 = setTimeout(() => setShowS2(true), 550);
-    const t3 = setTimeout(() => setShowK(true), 1000);
-    const t4 = setTimeout(() => setShowDot(true), 1350);
+    // Phase 1: Fly-in sequence
+    const t1 = setTimeout(() => setShowS1(true), 150);
+    const t2 = setTimeout(() => setShowS2(true), 600);
+    const t3 = setTimeout(() => setShowK(true), 1050);
+    const t4 = setTimeout(() => setShowDot(true), 1400);
 
-    // Phase 2: Assembly into "SSK." & Radial shockwave
+    // Phase 2: Assembly into unified "SSK." + Radiant shockwave
     const t5 = setTimeout(() => {
       setIsAssembled(true);
       setShowShockwave(true);
-    }, 1600);
+    }, 1700);
 
     // Phase 3: Sliding Double-Door Reveal
     const t6 = setTimeout(() => {
       setIsDoorsOpening(true);
-    }, 2200);
+    }, 2400);
 
     // Phase 4: Fadeout overlay & clean DOM unmount
     const t7 = setTimeout(() => {
       setFadeOut(true);
-    }, 3050);
+    }, 3400);
 
     const t8 = setTimeout(() => {
-      onComplete();
-    }, 3300);
+      onComplete?.();
+    }, 3800);
 
-    // Keyboard ESC to skip immediately
+    // Keyboard ESC to skip
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        onComplete();
+        onComplete?.();
       }
     };
     window.addEventListener('keydown', handleKeyDown);
@@ -74,8 +74,8 @@ export function InteractiveIntro({ onComplete }: InteractiveIntroProps) {
 
   return (
     <div
-      className={`fixed inset-0 z-50 overflow-hidden select-none transition-opacity duration-300 ${
-        fadeOut ? 'opacity-0 pointer-events-none' : 'opacity-100 pointer-events-auto'
+      className={`fixed inset-0 z-[9999] pointer-events-none flex items-center justify-center bg-[#070b14] overflow-hidden select-none transition-opacity duration-500 ${
+        fadeOut ? 'opacity-0' : 'opacity-100'
       }`}
       aria-label="Portfolio entrance sequence"
     >
@@ -144,17 +144,13 @@ export function InteractiveIntro({ onComplete }: InteractiveIntroProps) {
          ======================================================== */}
       <div
         className={`absolute inset-0 z-20 flex flex-col items-center justify-center p-4 transition-all duration-700 ease-[cubic-bezier(0.77,0,0.175,1)] ${
-          isDoorsOpening
-            ? 'scale-115 opacity-0 pointer-events-none'
-            : 'scale-100 opacity-100 pointer-events-auto'
+          isDoorsOpening ? 'scale-115 opacity-0' : 'scale-100 opacity-100'
         }`}
       >
         {/* Radial Cyan / Indigo Shockwave Ripple on Assembly */}
         {showShockwave && (
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            {/* Outer expanding ring */}
             <div className="absolute w-[180px] h-[180px] sm:w-[280px] sm:h-[280px] rounded-full border border-cyan-400/80 shadow-[0_0_35px_rgba(34,211,238,0.6)] animate-ping [animation-duration:1s]" />
-            {/* Soft radial glow pulse */}
             <div className="absolute w-[260px] h-[260px] sm:w-[400px] sm:h-[400px] rounded-full bg-gradient-to-tr from-cyan-500/20 via-indigo-600/25 to-cyan-400/10 blur-3xl opacity-80 animate-pulse" />
           </div>
         )}
@@ -253,8 +249,8 @@ export function InteractiveIntro({ onComplete }: InteractiveIntroProps) {
          ======================================================== */}
       <button
         type="button"
-        onClick={onComplete}
-        className="fixed top-6 right-6 z-30 px-3.5 py-1.5 rounded-lg bg-slate-900/80 hover:bg-slate-800 text-slate-400 hover:text-cyan-300 border border-white/10 hover:border-cyan-400/50 text-[10px] sm:text-xs font-mono font-semibold transition-all cursor-pointer backdrop-blur-md shadow-lg"
+        onClick={() => onComplete?.()}
+        className="fixed top-6 right-6 z-30 pointer-events-auto px-3.5 py-1.5 rounded-lg bg-slate-900/80 hover:bg-slate-800 text-slate-400 hover:text-cyan-300 border border-white/10 hover:border-cyan-400/50 text-[10px] sm:text-xs font-mono font-semibold transition-all cursor-pointer backdrop-blur-md shadow-lg"
       >
         SKIP [ESC]
       </button>

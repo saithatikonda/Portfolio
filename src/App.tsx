@@ -15,21 +15,10 @@ import { InteractiveIntro } from './components/InteractiveIntro';
 import { ProjectItem } from './data/portfolioData';
 
 export default function App() {
-  // Cinematic intro state (runs once per session on initial visit)
-  const [showIntro, setShowIntro] = useState<boolean>(() => {
-    try {
-      return !sessionStorage.getItem('ssk_intro_seen');
-    } catch {
-      return true;
-    }
-  });
+  // Intro animation state: plays reliably on every page load during testing
+  const [showIntro, setShowIntro] = useState<boolean>(true);
 
   const handleIntroComplete = () => {
-    try {
-      sessionStorage.setItem('ssk_intro_seen', 'true');
-    } catch {
-      // Storage access fail-safe
-    }
     setShowIntro(false);
   };
 
