@@ -11,12 +11,27 @@ import { Footer } from './components/Footer';
 import { ResumeModal } from './components/ResumeModal';
 import { PhotoUploadModal } from './components/PhotoUploadModal';
 import { ProjectDetailModal } from './components/ProjectDetailModal';
-import { MallDoorIntro } from './components/MallDoorIntro';
+import { InteractiveIntro } from './components/InteractiveIntro';
 import { ProjectItem } from './data/portfolioData';
 
 export default function App() {
-  // Entrance loader state
-  const [showIntro, setShowIntro] = useState<boolean>(true);
+  // Cinematic intro state (runs once per session on initial visit)
+  const [showIntro, setShowIntro] = useState<boolean>(() => {
+    try {
+      return !sessionStorage.getItem('ssk_intro_seen');
+    } catch {
+      return true;
+    }
+  });
+
+  const handleIntroComplete = () => {
+    try {
+      sessionStorage.setItem('ssk_intro_seen', 'true');
+    } catch {
+      // Storage access fail-safe
+    }
+    setShowIntro(false);
+  };
 
   // Navigation & branch state
   const [activeBranch, setActiveBranch] = useState<string | null>(null);
@@ -108,10 +123,10 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#060913] text-[#F8FAFC] flex flex-col selection:bg-cyan-500/30 selection:text-cyan-200">
-      {/* Futuristic Automatic Mall Sliding Doors Entrance Loader */}
+      {/* Cinematic Interactive Intro Sequence */}
       {showIntro && (
-        <MallDoorIntro
-          onComplete={() => setShowIntro(false)}
+        <InteractiveIntro
+          onComplete={handleIntroComplete}
           customPhotoUrl={customPhotoUrl}
         />
       )}
