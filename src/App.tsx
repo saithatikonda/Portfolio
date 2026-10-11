@@ -11,9 +11,13 @@ import { Footer } from './components/Footer';
 import { ResumeModal } from './components/ResumeModal';
 import { PhotoUploadModal } from './components/PhotoUploadModal';
 import { ProjectDetailModal } from './components/ProjectDetailModal';
+import { MallDoorIntro } from './components/MallDoorIntro';
 import { ProjectItem } from './data/portfolioData';
 
 export default function App() {
+  // Entrance loader state
+  const [showIntro, setShowIntro] = useState<boolean>(true);
+
   // Navigation & branch state
   const [activeBranch, setActiveBranch] = useState<string | null>(null);
   const [resumeModalOpen, setResumeModalOpen] = useState<boolean>(false);
@@ -104,6 +108,14 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#060913] text-[#F8FAFC] flex flex-col selection:bg-cyan-500/30 selection:text-cyan-200">
+      {/* Futuristic Automatic Mall Sliding Doors Entrance Loader */}
+      {showIntro && (
+        <MallDoorIntro
+          onComplete={() => setShowIntro(false)}
+          customPhotoUrl={customPhotoUrl}
+        />
+      )}
+
       {/* Sticky Navigation Bar */}
       <Navbar
         onOpenResume={() => setResumeModalOpen(true)}
