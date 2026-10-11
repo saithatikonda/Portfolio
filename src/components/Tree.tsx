@@ -7,7 +7,6 @@ import {
   Trophy,
   Award,
   Mail,
-  Sparkles,
   ArrowRight,
   GitBranch,
   Camera,
@@ -46,6 +45,9 @@ export function Tree({
   isDrawerOpen = false,
 }: TreeProps) {
   const [hoveredNode, setHoveredNode] = useState<string | null>(null);
+  const [rootImageError, setRootImageError] = useState(false);
+
+  const profileSrc = customPhotoUrl || '/profile.jpg';
 
   // 7 Branch Definitions strictly aligned with requirements
   const branches: TreeBranchDef[] = [
@@ -392,17 +394,19 @@ export function Tree({
         <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20">
           <div className="p-1 rounded-2xl bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-500 shadow-2xl shadow-cyan-950/90">
             <div className="px-5 py-3 rounded-[14px] bg-[#0A1124] border border-cyan-500/30 text-center flex items-center gap-3.5 backdrop-blur-xl">
-              {/* Avatar Portrait / Monogram */}
-              <div className="relative w-11 h-11 rounded-full bg-cyan-500/20 border-2 border-cyan-400/60 flex items-center justify-center font-black text-cyan-300 text-sm shrink-0 overflow-hidden group shadow-md shadow-cyan-950/60">
-                {customPhotoUrl ? (
+              {/* Avatar Portrait: Circular Profile Image */}
+              <div className="relative w-10 h-10 rounded-full overflow-hidden flex items-center justify-center shrink-0 border border-cyan-400 shadow-md shadow-cyan-500/25 group">
+                {!rootImageError ? (
                   <img
-                    src={customPhotoUrl}
+                    src={profileSrc}
                     alt="Sai Shiva Kumar"
-                    referrerPolicy="no-referrer"
-                    className="w-full h-full object-cover"
+                    onError={() => setRootImageError(true)}
+                    className="w-10 h-10 rounded-full object-cover object-top border border-cyan-400 transition-transform duration-300 group-hover:scale-110"
                   />
                 ) : (
-                  <span>SSK</span>
+                  <div className="w-full h-full bg-cyan-500/20 flex items-center justify-center font-black text-cyan-300 text-xs">
+                    SSK
+                  </div>
                 )}
                 <button
                   onClick={onOpenPhotoModal}
@@ -586,11 +590,18 @@ export function Tree({
 
         {/* Mobile Root Capsule */}
         <div className="mt-6 p-4 rounded-2xl bg-[#0A1124] border border-cyan-500/30 text-center flex items-center gap-3.5 shadow-xl">
-          <div className="relative w-10 h-10 rounded-full bg-cyan-500/20 border border-cyan-400/50 flex items-center justify-center font-bold text-cyan-300 text-xs shrink-0 overflow-hidden">
-            {customPhotoUrl ? (
-              <img src={customPhotoUrl} alt="Sai Shiva Kumar" className="w-full h-full object-cover" />
+          <div className="relative w-10 h-10 rounded-full overflow-hidden flex items-center justify-center shrink-0 border border-cyan-400 shadow-md">
+            {!rootImageError ? (
+              <img
+                src={profileSrc}
+                alt="Sai Shiva Kumar"
+                onError={() => setRootImageError(true)}
+                className="w-10 h-10 rounded-full object-cover object-top border border-cyan-400"
+              />
             ) : (
-              <span>SSK</span>
+              <div className="w-full h-full bg-cyan-500/20 flex items-center justify-center font-bold text-cyan-300 text-xs">
+                SSK
+              </div>
             )}
           </div>
           <div className="text-left flex-1">

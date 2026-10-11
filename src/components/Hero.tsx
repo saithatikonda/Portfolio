@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Download, ArrowDown, Camera, Sparkles } from 'lucide-react';
 import { PORTFOLIO_DATA } from '../data/portfolioData';
 
@@ -15,8 +16,10 @@ export function Hero({
   onExploreJourney,
 }: HeroProps) {
   const { personal } = PORTFOLIO_DATA;
+  const [imageError, setImageError] = useState(false);
 
   const techStack = ['C', 'Python', 'Java', 'Arduino', 'DSA', 'DBMS'];
+  const profileSrc = customPhotoUrl || '/profile.jpg';
 
   return (
     <section
@@ -105,7 +108,7 @@ export function Hero({
           </div>
 
           {/* ========================================================
-              RIGHT COLUMN: GLASSMORPHIC ID CARD
+              RIGHT COLUMN: GLASSMORPHIC ID CARD WITH PROFILE IMAGE
              ======================================================== */}
           <div className="lg:col-span-5 flex justify-center lg:justify-end z-10">
             <div className="relative w-full max-w-sm">
@@ -125,24 +128,24 @@ export function Hero({
                   <Sparkles className="w-4 h-4 text-cyan-400" />
                 </div>
 
-                {/* Circular / Rounded Portrait Badge with Glowing Pulsing Border */}
-                <div className="relative w-44 h-44 sm:w-48 sm:h-48 mx-auto rounded-full overflow-hidden mb-6 bg-slate-950 border-2 border-cyan-400/60 shadow-[0_0_30px_rgba(56,189,248,0.3)] flex items-center justify-center group ring-4 ring-cyan-500/20">
-                  {customPhotoUrl ? (
+                {/* Profile Image: Rounded Squircle Portrait with Cyan/Blue Glow Border */}
+                <div className="relative w-32 h-32 mx-auto rounded-2xl overflow-hidden mb-6 bg-slate-950 border-2 border-cyan-400/60 shadow-lg shadow-cyan-500/25 flex items-center justify-center group ring-4 ring-cyan-500/20">
+                  {!imageError ? (
                     <img
-                      src={customPhotoUrl}
+                      src={profileSrc}
                       alt="Thatikonda Sai Shiva Kumar - Portrait"
-                      referrerPolicy="no-referrer"
-                      className="w-full h-full object-cover"
+                      onError={() => setImageError(true)}
+                      className="w-32 h-32 rounded-2xl object-cover object-top transition-transform duration-300 group-hover:scale-105"
                     />
                   ) : (
-                    <div className="w-full h-full flex flex-col items-center justify-center p-4 text-center bg-gradient-to-b from-slate-900 via-slate-950 to-black">
-                      <div className="w-16 h-16 rounded-full bg-cyan-500/15 border border-cyan-400/40 flex items-center justify-center mb-2 shadow-inner">
-                        <span className="text-2xl font-black text-cyan-300 tracking-wider">
+                    <div className="w-full h-full flex flex-col items-center justify-center p-3 text-center bg-gradient-to-b from-slate-900 via-slate-950 to-black">
+                      <div className="w-12 h-12 rounded-xl bg-cyan-500/15 border border-cyan-400/40 flex items-center justify-center mb-1">
+                        <span className="text-lg font-black text-cyan-300 tracking-wider">
                           SSK
                         </span>
                       </div>
-                      <p className="text-[11px] text-slate-400 font-mono">
-                        Portrait Badge
+                      <p className="text-[10px] text-slate-400 font-mono">
+                        Profile Image
                       </p>
                     </div>
                   )}
@@ -150,12 +153,12 @@ export function Hero({
                   {/* Photo Upload / Change overlay button */}
                   <button
                     onClick={onOpenPhotoModal}
-                    className="absolute inset-0 bg-slate-950/80 backdrop-blur-xs flex flex-col items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer p-4 text-center"
+                    className="absolute inset-0 bg-slate-950/80 backdrop-blur-xs flex flex-col items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer p-2 text-center"
                     title="Upload or change photo"
                   >
-                    <Camera className="w-5 h-5 text-cyan-400 mb-1" />
-                    <span className="text-[11px] font-semibold text-cyan-200">
-                      {customPhotoUrl ? 'Change Portrait' : 'Upload Portrait'}
+                    <Camera className="w-4 h-4 text-cyan-400 mb-1" />
+                    <span className="text-[10px] font-semibold text-cyan-200">
+                      Change Photo
                     </span>
                   </button>
                 </div>
