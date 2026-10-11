@@ -5,9 +5,10 @@ import { PORTFOLIO_DATA } from '../data/portfolioData';
 interface NavbarProps {
   onOpenResume: () => void;
   onNavigateToSection: (sectionId: string) => void;
+  activeSection?: string | null;
 }
 
-export function Navbar({ onOpenResume, onNavigateToSection }: NavbarProps) {
+export function Navbar({ onOpenResume, onNavigateToSection, activeSection }: NavbarProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navLinks = [
@@ -24,7 +25,9 @@ export function Navbar({ onOpenResume, onNavigateToSection }: NavbarProps) {
 
   const handleLinkClick = (id: string) => {
     onNavigateToSection(id);
-    setMobileMenuOpen(false);
+    if (mobileMenuOpen) {
+      setMobileMenuOpen(false);
+    }
   };
 
   return (
@@ -34,6 +37,7 @@ export function Navbar({ onOpenResume, onNavigateToSection }: NavbarProps) {
           
           {/* Wordmark */}
           <button
+            type="button"
             onClick={() => handleLinkClick('home')}
             className="group flex items-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 rounded-lg cursor-pointer text-left"
           >
@@ -45,20 +49,29 @@ export function Navbar({ onOpenResume, onNavigateToSection }: NavbarProps) {
 
           {/* Navigation Links */}
           <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
-            {navLinks.map((link) => (
-              <button
-                key={link.id}
-                onClick={() => handleLinkClick(link.id)}
-                className="px-3 py-1.5 text-xs font-semibold text-slate-300 hover:text-white hover:bg-white/[0.05] transition-colors rounded-lg cursor-pointer"
-              >
-                {link.label}
-              </button>
-            ))}
+            {navLinks.map((link) => {
+              const isActive = activeSection === link.id;
+              return (
+                <button
+                  key={link.id}
+                  type="button"
+                  onClick={() => handleLinkClick(link.id)}
+                  className={`px-3 py-1.5 text-xs font-semibold rounded-lg cursor-pointer transition-colors ${
+                    isActive
+                      ? 'text-cyan-300 bg-white/[0.08] shadow-xs'
+                      : 'text-slate-300 hover:text-white hover:bg-white/[0.05]'
+                  }`}
+                >
+                  {link.label}
+                </button>
+              );
+            })}
           </nav>
 
           {/* Primary Action */}
           <div className="flex items-center gap-2 sm:gap-3">
             <button
+              type="button"
               onClick={onOpenResume}
               className="inline-flex items-center gap-2 px-4 py-2 text-xs sm:text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 active:scale-95 rounded-xl shadow-sm border border-cyan-400/30 transition-all cursor-pointer whitespace-nowrap"
             >
@@ -68,6 +81,7 @@ export function Navbar({ onOpenResume, onNavigateToSection }: NavbarProps) {
 
             {/* Mobile Menu Button */}
             <button
+              type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-2 text-slate-300 hover:text-white hover:bg-slate-800/60 rounded-xl border border-white/[0.08] lg:hidden transition-colors cursor-pointer"
               aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
@@ -83,24 +97,33 @@ export function Navbar({ onOpenResume, onNavigateToSection }: NavbarProps) {
       {mobileMenuOpen && (
         <div className="lg:hidden fixed inset-x-0 top-[61px] bg-[#060913]/95 backdrop-blur-xl border-b border-white/[0.08] px-5 py-6 shadow-2xl transition-all">
           <div className="flex flex-col gap-1.5">
-            {navLinks.map((link) => (
-              <button
-                key={link.id}
-                onClick={() => handleLinkClick(link.id)}
-                className="w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium text-slate-300 hover:text-white hover:bg-white/[0.05] transition-colors text-left cursor-pointer"
-              >
-                <span>{link.label}</span>
-                <ChevronRight className="w-4 h-4 text-slate-500" />
-              </button>
-            ))}
+            {navLinks.map((link) => {
+              const isActive = activeSection === link.id;
+              return (
+                <button
+                  key={link.id}
+                  type="button"
+                  onClick={() => handleLinkClick(link.id)}
+                  className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-left cursor-pointer ${
+                    isActive
+                      ? 'text-cyan-300 bg-cyan-950/40 border border-cyan-500/20'
+                      : 'text-slate-300 hover:text-white hover:bg-white/[0.05]'
+                  }`}
+                >
+                  <span>{link.label}</span>
+                  <ChevronRight className={`w-4 h-4 ${isActive ? 'text-cyan-400' : 'text-slate-500'}`} />
+                </button>
+              );
+            })}
 
             <div className="pt-4 mt-2 border-t border-white/[0.08]">
               <button
+                type="button"
                 onClick={() => {
                   setMobileMenuOpen(false);
                   onOpenResume();
                 }}
-                className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-blue-600 text-white font-semibold text-xs"
+                className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-blue-600 text-white font-semibold text-xs cursor-pointer"
               >
                 <FileText className="w-4 h-4" />
                 <span>Download Resume</span>

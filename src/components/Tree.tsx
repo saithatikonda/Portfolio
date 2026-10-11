@@ -286,7 +286,7 @@ export function Tree({
                   <h5 className="text-sm sm:text-base font-bold text-white mb-1">
                     {proj.title}
                   </h5>
-                  <p className="text-xs text-slate-400 mb-2.5 leading-relaxed line-clamp-3">
+                  <p className="text-xs text-slate-400 mb-2.5 leading-relaxed">
                     {proj.description}
                   </p>
 
@@ -567,7 +567,7 @@ export function Tree({
   return (
     <section
       id="tree"
-      className="relative min-h-fit py-12 sm:py-16 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto flex flex-col items-center justify-start transition-all duration-300 w-full box-border"
+      className="relative min-h-fit py-12 sm:py-16 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto flex flex-col items-center justify-start transition-all duration-300 w-full box-border scroll-mt-20"
     >
       {/* Background Bioluminescent Nebula Glows */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-gradient-to-tr from-cyan-600/10 via-blue-600/10 to-indigo-600/15 rounded-full blur-[140px] pointer-events-none -z-10" />
@@ -604,11 +604,13 @@ export function Tree({
             return (
               <div
                 key={b.id}
-                className="relative flex items-start gap-3 sm:gap-4 w-full box-border"
+                id={b.id}
+                data-branch-id={b.id}
+                className="relative flex items-start gap-3 sm:gap-4 w-full box-border scroll-mt-24"
               >
                 {/* Branch Node Point on Spine */}
                 <div
-                  className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center shrink-0 border shadow-lg transition-transform mt-1"
+                  className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center shrink-0 border shadow-lg transition-transform duration-200 mt-1"
                   style={{
                     backgroundColor: isOpen ? b.color : '#0B1324',
                     borderColor: b.color,
@@ -621,7 +623,8 @@ export function Tree({
 
                 {/* Collapsible Card Container */}
                 <div
-                  className={`flex-1 min-w-0 box-border rounded-2xl border transition-all duration-300 ${
+                  id={`branch-${b.id}`}
+                  className={`flex-1 min-w-0 box-border rounded-2xl border transition-all duration-200 ${
                     isOpen
                       ? 'bg-[#0B1528] border-cyan-400/80 ring-2 ring-cyan-400/40 shadow-2xl'
                       : 'bg-[#0B1324]/95 border-white/[0.08] hover:border-slate-700 hover:bg-[#0c162b]'
@@ -632,6 +635,7 @@ export function Tree({
                 >
                   {/* Clickable Header Bar */}
                   <button
+                    type="button"
                     onClick={() => onSelectBranch(b.id)}
                     className="w-full box-border p-3.5 sm:p-4 text-left flex items-center justify-between gap-3 cursor-pointer touch-manipulation select-none"
                     aria-expanded={isOpen}
@@ -661,11 +665,11 @@ export function Tree({
 
                     {/* Chevron Indicator Flips Down When Opened */}
                     <div
-                      className="p-1.5 rounded-lg bg-white/[0.04] shrink-0 transition-transform duration-300"
+                      className="p-1.5 rounded-lg bg-white/[0.04] shrink-0 transition-transform duration-200"
                       style={{ color: b.color }}
                     >
                       <ChevronDown
-                        className={`w-5 h-5 transition-transform duration-300 ${
+                        className={`w-5 h-5 transition-transform duration-200 ${
                           isOpen ? 'rotate-180' : 'rotate-0'
                         }`}
                       />
@@ -674,7 +678,7 @@ export function Tree({
 
                   {/* Vertical In-Place Accordion Expansion */}
                   {isOpen && (
-                    <div className="w-full box-border overflow-hidden transition-all duration-300 ease-in-out px-3.5 sm:px-4 pb-4 pt-1 border-t border-white/[0.08] animate-in fade-in slide-in-from-top-2 duration-200">
+                    <div className="w-full box-border max-h-none h-auto overflow-visible transition-all duration-200 ease-in-out px-3.5 sm:px-4 pb-4 pt-1 border-t border-white/[0.08] animate-in fade-in duration-200">
                       {renderBranchContent(b.id)}
                     </div>
                   )}

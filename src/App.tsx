@@ -80,14 +80,26 @@ export default function App() {
     }
     if (sectionId === 'tree' || sectionId === 'branches') {
       const el = document.getElementById('tree');
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
       return;
     }
 
-    // Direct branch click: scroll to tree and expand that branch in-place
+    // Direct branch click: trigger target branch in Tree.tsx to expand immediately
     setActiveBranch(sectionId);
-    const el = document.getElementById('tree');
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
+
+    // Smoothly scroll directly to that specific expanded card using scrollIntoView
+    const scrollToTarget = () => {
+      const el = document.getElementById(sectionId) || document.getElementById(`branch-${sectionId}`);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        const treeEl = document.getElementById('tree');
+        if (treeEl) treeEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    };
+
+    requestAnimationFrame(scrollToTarget);
+    setTimeout(scrollToTarget, 40);
   };
 
   return (
@@ -96,6 +108,7 @@ export default function App() {
       <Navbar
         onOpenResume={() => setResumeModalOpen(true)}
         onNavigateToSection={handleNavigateToSection}
+        activeSection={activeBranch}
       />
 
       {/* Main 2-Screen Experience */}
