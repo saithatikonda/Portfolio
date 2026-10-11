@@ -35,6 +35,15 @@
   }
 }
 
+/* Hide scrollbar for clean horizontal swipes */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 /* Glassmorphism Surface Utilities */
 .surface-card {
   background: rgba(11, 15, 29, 0.75);

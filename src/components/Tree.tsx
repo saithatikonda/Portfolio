@@ -548,7 +548,7 @@ export function Tree({
                 {/* Branch Card Button */}
                 <button
                   onClick={() => onSelectBranch(b.id)}
-                  className={`flex-1 p-3.5 rounded-2xl border text-left flex items-center justify-between transition-all cursor-pointer ${
+                  className={`flex-1 min-w-0 box-border p-3.5 rounded-2xl border text-left flex items-center justify-between transition-all cursor-pointer touch-manipulation active:scale-[0.98] ${
                     isActive
                       ? 'bg-slate-900 border-cyan-400 ring-2 ring-cyan-400/50 shadow-xl'
                       : 'bg-[#0B1324]/95 border-white/[0.08] hover:border-slate-700'
