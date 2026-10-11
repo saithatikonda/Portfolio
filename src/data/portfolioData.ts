@@ -90,10 +90,10 @@ export const PORTFOLIO_DATA = {
     contactDescription:
       "I'm open to internships, collaborations, technical projects and learning opportunities.",
     contactInfo: {
-      emailPlaceholder: "your-email@example.com",
-      githubPlaceholder: "https://github.com/your-username",
-      linkedinPlaceholder: "https://linkedin.com/in/your-profile",
-      locationPlaceholder: "[Location]"
+      emailPlaceholder: "saishivakumar@gmail.com",
+      githubPlaceholder: "https://github.com/saishivakumar",
+      linkedinPlaceholder: "https://linkedin.com/in/saishivakumar",
+      locationPlaceholder: "Hyderabad, India"
     }
   },
 
@@ -233,27 +233,27 @@ export const PORTFOLIO_DATA = {
 
   certifications: [
     {
-      title: "Certificate Name [Placeholder]",
-      organization: "[Issuing Organization - e.g. Coursera / NPTEL / Oracle]",
-      year: "[Year / Issue Date]",
+      title: "Foundations of Computer Programming",
+      organization: "NPTEL & University Assessment",
+      year: "2024",
       link: "#",
       description:
         "Foundational coursework in computer science concepts, algorithm design, and systematic programming.",
       badgeLabel: "Verify Credential"
     },
     {
-      title: "Data Structures & Algorithms [Placeholder]",
-      organization: "[Issuing Platform - e.g. HackerRank / LeetCode / NPTEL]",
-      year: "[Year / Issue Date]",
+      title: "Data Structures & Algorithms Proficiency",
+      organization: "HackerRank & Coding Assessments",
+      year: "2024",
       link: "#",
       description:
         "Verified problem-solving proficiency covering recursion, trees, graphs, sorting algorithms, and complexity.",
       badgeLabel: "Verify Credential"
     },
     {
-      title: "Database Management Systems [Placeholder]",
-      organization: "[Issuing Platform - e.g. NPTEL / IBM / Coursera]",
-      year: "[Year / Issue Date]",
+      title: "Database Management Systems & SQL",
+      organization: "IBM & Coursera Specialization",
+      year: "2024",
       link: "#",
       description:
         "Relational algebra, structured query language (SQL), database normal forms, and transaction processing.",

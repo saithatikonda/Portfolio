@@ -9,16 +9,12 @@ import {
   Linkedin,
   Copy,
   Check,
-  Code2,
-  BookOpen,
-  Award,
-  Trophy,
-  GraduationCap,
-  Calendar,
-  MapPin,
   Sparkles,
   ArrowUpRight,
   Send,
+  GraduationCap,
+  MapPin,
+  Trophy,
 } from 'lucide-react';
 import { PORTFOLIO_DATA, ProjectItem } from '../data/portfolioData';
 
@@ -36,8 +32,6 @@ export function Drawer({
   activeBranchId,
   onClose,
   onSelectBranch,
-  onSelectProject,
-  onOpenResume,
 }: DrawerProps) {
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [contactSubject, setContactSubject] = useState('');
@@ -158,16 +152,18 @@ export function Drawer({
         }`}
       />
 
-      {/* Slide-Out Drawer from RIGHT edge (460px width or full width on mobile) */}
+      {/* Slide-Out Drawer (Bottom sheet on mobile max-h-[85vh], side drawer on sm+) */}
       <aside
-        className={`fixed inset-y-0 right-0 w-full sm:w-[460px] md:w-[480px] bg-[#0b0f1d]/90 backdrop-blur-2xl border-l border-white/[0.1] shadow-2xl flex flex-col z-50 transform transition-transform duration-300 ease-out text-slate-100 ${
-          isOpen ? 'translate-x-0' : 'translate-x-full'
+        className={`fixed bottom-0 right-0 sm:inset-y-0 w-full sm:w-[460px] md:w-[480px] h-full max-h-[85vh] sm:max-h-full flex flex-col bg-[#0b0f1d]/95 backdrop-blur-2xl border-t sm:border-t-0 sm:border-l border-white/[0.1] shadow-2xl z-50 transform transition-transform duration-300 ease-out text-slate-100 ${
+          isOpen
+            ? 'translate-y-0 sm:translate-x-0'
+            : 'translate-y-full sm:translate-x-full sm:translate-y-0'
         }`}
       >
         {/* ========================================================
             HEADER
            ======================================================== */}
-        <div className="px-6 py-4 bg-[#090d1a]/95 border-b border-white/[0.08] flex items-center justify-between shrink-0">
+        <div className="px-5 sm:px-6 py-3.5 sm:py-4 bg-[#090d1a]/95 border-b border-white/[0.08] flex items-center justify-between shrink-0">
           <div>
             <div className="flex items-center gap-2">
               <span
@@ -178,7 +174,7 @@ export function Drawer({
                 {currentBranch.tag}
               </span>
             </div>
-            <h2 className="text-lg font-bold text-white tracking-tight mt-0.5">
+            <h2 className="text-base sm:text-lg font-bold text-white tracking-tight mt-0.5">
               {currentBranch.name}
             </h2>
           </div>
@@ -195,7 +191,7 @@ export function Drawer({
         </div>
 
         {/* Quick Branch Tabs Ribbon */}
-        <div className="px-5 py-2 bg-[#060913] border-b border-white/[0.06] flex items-center gap-1.5 overflow-x-auto text-xs font-mono shrink-0 scrollbar-none">
+        <div className="px-4 sm:px-5 py-2 bg-[#060913] border-b border-white/[0.06] flex items-center gap-1.5 overflow-x-auto text-xs font-mono shrink-0 scrollbar-none">
           {branches.map((b) => {
             const isActive = b.id === currentBranch.id;
             return (
@@ -223,37 +219,37 @@ export function Drawer({
         </div>
 
         {/* ========================================================
-            TAILORED BODY CONTENT
+            SCROLLABLE CONTENT AREA (No massive dead gaps)
            ======================================================== */}
         <div
           key={currentBranch.id}
-          className="flex-1 overflow-y-auto p-6 space-y-6 overscroll-contain animate-in fade-in duration-200"
+          className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4 overscroll-contain animate-in fade-in duration-200"
         >
           {/* BRANCH 01: ABOUT ME */}
           {currentBranch.id === 'about' && (
-            <div className="space-y-6">
+            <div className="space-y-4">
               <div className="p-4 rounded-2xl bg-emerald-950/20 border border-emerald-500/25">
                 <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-400 font-semibold block mb-1">
                   Engineering Philosophy
                 </span>
-                <p className="text-sm text-slate-200 leading-relaxed">
+                <p className="text-xs sm:text-sm text-slate-200 leading-relaxed">
                   {PORTFOLIO_DATA.personal.aboutIntro}
                 </p>
               </div>
 
               <div>
-                <h3 className="text-xs font-mono uppercase tracking-wider text-slate-400 font-bold mb-3">
+                <h3 className="text-xs font-mono uppercase tracking-wider text-slate-400 font-bold mb-2.5">
                   Core Development Pillars
                 </h3>
-                <div className="space-y-3">
+                <div className="space-y-2.5">
                   {PORTFOLIO_DATA.personal.aboutCards.map((card, idx) => (
                     <div
                       key={idx}
-                      className="p-4 rounded-xl bg-white/[0.03] border border-white/[0.07] hover:border-emerald-500/30 transition-colors"
+                      className="p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.07] hover:border-emerald-500/30 transition-colors"
                     >
-                      <div className="flex items-center gap-2 mb-1.5">
-                        <Sparkles className="w-4 h-4 text-emerald-400" />
-                        <h4 className="text-sm font-semibold text-white">
+                      <div className="flex items-center gap-2 mb-1">
+                        <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
+                        <h4 className="text-xs sm:text-sm font-semibold text-white">
                           {card.title}
                         </h4>
                       </div>
@@ -265,18 +261,16 @@ export function Drawer({
                 </div>
               </div>
 
-              <div className="pt-2 border-t border-white/[0.08]">
-                <div className="flex items-center justify-between text-xs text-slate-400 font-mono">
-                  <span>Undergraduate Status:</span>
-                  <span className="text-emerald-400 font-semibold">Active CSD Student</span>
-                </div>
+              <div className="p-3 rounded-xl bg-white/[0.02] border border-white/[0.06] flex items-center justify-between text-xs text-slate-400 font-mono">
+                <span>Undergraduate Status:</span>
+                <span className="text-emerald-400 font-semibold">Active CSD Student</span>
               </div>
             </div>
           )}
 
           {/* BRANCH 02: TECHNICAL SKILLS */}
           {currentBranch.id === 'skills' && (
-            <div className="space-y-6">
+            <div className="space-y-4">
               {/* Category Filter Pills */}
               <div className="flex flex-wrap gap-1.5">
                 {['all', 'Languages', 'Computer Science', 'Hardware & IoT'].map((cat) => (
@@ -295,7 +289,7 @@ export function Drawer({
               </div>
 
               {/* Categorized Skills Breakdown */}
-              <div className="space-y-4">
+              <div className="space-y-3">
                 {PORTFOLIO_DATA.skills.map((group, idx) => {
                   if (
                     selectedSkillCategory !== 'all' &&
@@ -307,10 +301,10 @@ export function Drawer({
                   return (
                     <div
                       key={idx}
-                      className="p-4 rounded-2xl bg-white/[0.03] border border-white/[0.08]"
+                      className="p-3.5 sm:p-4 rounded-2xl bg-white/[0.03] border border-white/[0.08]"
                     >
-                      <div className="mb-3">
-                        <h4 className="text-sm font-bold text-white flex items-center justify-between">
+                      <div className="mb-2.5">
+                        <h4 className="text-xs sm:text-sm font-bold text-white flex items-center justify-between">
                           <span>{group.name}</span>
                           <span className="text-[10px] font-mono text-cyan-400 font-normal">
                             {group.skills.length} skills
@@ -321,11 +315,11 @@ export function Drawer({
                         </p>
                       </div>
 
-                      <div className="flex flex-wrap gap-2">
+                      <div className="flex flex-wrap gap-1.5">
                         {group.skills.map((skill, sIdx) => (
                           <div
                             key={sIdx}
-                            className="px-3 py-1.5 rounded-xl bg-cyan-950/40 border border-cyan-500/20 text-xs font-medium text-slate-200 flex items-center gap-2 group hover:border-cyan-400/50 transition-colors"
+                            className="px-2.5 py-1 rounded-lg bg-cyan-950/40 border border-cyan-500/20 text-[11px] font-medium text-slate-200 flex items-center gap-1.5"
                           >
                             <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
                             <span>{skill.name}</span>
@@ -341,13 +335,13 @@ export function Drawer({
 
           {/* BRANCH 03: PROJECTS SHOWCASE */}
           {currentBranch.id === 'projects' && (
-            <div className="space-y-4">
+            <div className="space-y-3">
               {PORTFOLIO_DATA.projects.map((proj) => (
                 <div
                   key={proj.id}
-                  className="p-5 rounded-2xl bg-white/[0.03] border border-white/[0.08] hover:border-indigo-500/40 transition-all group"
+                  className="p-4 rounded-2xl bg-white/[0.03] border border-white/[0.08] hover:border-indigo-500/40 transition-all group"
                 >
-                  <div className="flex items-center justify-between gap-2 mb-2">
+                  <div className="flex items-center justify-between gap-2 mb-1.5">
                     <span className="text-[10px] font-mono text-indigo-400 font-bold uppercase tracking-wider">
                       PROJECT {proj.number}
                     </span>
@@ -356,15 +350,15 @@ export function Drawer({
                     </span>
                   </div>
 
-                  <h4 className="text-base font-bold text-white mb-1 group-hover:text-indigo-200 transition-colors">
+                  <h4 className="text-sm sm:text-base font-bold text-white mb-1 group-hover:text-indigo-200 transition-colors">
                     {proj.title}
                   </h4>
-                  <p className="text-xs text-slate-400 mb-3 leading-relaxed">
+                  <p className="text-xs text-slate-400 mb-2.5 leading-relaxed">
                     {proj.description}
                   </p>
 
                   {/* Tech stack pills */}
-                  <div className="flex flex-wrap gap-1.5 mb-4">
+                  <div className="flex flex-wrap gap-1.5 mb-3">
                     {proj.technologies.map((t) => (
                       <span
                         key={t}
@@ -376,12 +370,12 @@ export function Drawer({
                   </div>
 
                   {/* Links / Action Buttons */}
-                  <div className="flex items-center gap-2 pt-3 border-t border-white/[0.06]">
+                  <div className="flex items-center gap-2 pt-2.5 border-t border-white/[0.06]">
                     <a
                       href={proj.githubUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700 hover:border-indigo-500/40 transition-colors"
+                      className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700 hover:border-indigo-500/40 transition-colors"
                     >
                       <Github className="w-3.5 h-3.5 text-indigo-400" />
                       <span>Code Repo</span>
@@ -391,7 +385,7 @@ export function Drawer({
                       href={proj.liveDemoUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold bg-indigo-600 hover:bg-indigo-500 text-white shadow-sm border border-indigo-400/30 transition-colors"
+                      className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-indigo-600 hover:bg-indigo-500 text-white shadow-sm border border-indigo-400/30 transition-colors"
                     >
                       <span>Live Demo</span>
                       <ExternalLink className="w-3.5 h-3.5" />
@@ -404,11 +398,11 @@ export function Drawer({
 
           {/* BRANCH 04: EDUCATION & FOUNDATION */}
           {currentBranch.id === 'education' && (
-            <div className="space-y-6">
+            <div className="space-y-4">
               {PORTFOLIO_DATA.education.map((edu, idx) => (
                 <div
                   key={idx}
-                  className="p-5 rounded-2xl bg-amber-950/15 border border-amber-500/25 space-y-4"
+                  className="p-4 rounded-2xl bg-amber-950/15 border border-amber-500/25 space-y-3"
                 >
                   <div className="flex items-center justify-between text-xs font-mono text-amber-400">
                     <span className="flex items-center gap-1.5">
@@ -419,10 +413,10 @@ export function Drawer({
                   </div>
 
                   <div>
-                    <h3 className="text-base font-extrabold text-white">
+                    <h3 className="text-sm sm:text-base font-extrabold text-white">
                       {edu.degree}
                     </h3>
-                    <p className="text-xs text-slate-300 mt-1 flex items-center gap-1.5">
+                    <p className="text-xs text-slate-300 mt-0.5 flex items-center gap-1.5">
                       <MapPin className="w-3 h-3 text-amber-400" />
                       <span>{edu.institution} • {edu.location}</span>
                     </p>
@@ -433,14 +427,14 @@ export function Drawer({
                   </p>
 
                   <div>
-                    <span className="text-[10px] font-mono uppercase tracking-wider text-amber-400 font-bold block mb-2">
-                      Coursework Details & Theory
+                    <span className="text-[10px] font-mono uppercase tracking-wider text-amber-400 font-bold block mb-1.5">
+                      Coursework & Computing Theory
                     </span>
                     <div className="flex flex-wrap gap-1.5">
                       {edu.coursework.map((course) => (
                         <span
                           key={course}
-                          className="px-2.5 py-1 rounded-lg text-[11px] font-medium bg-slate-900/90 text-amber-200 border border-amber-500/20"
+                          className="px-2 py-0.5 rounded-lg text-[11px] font-medium bg-slate-900/90 text-amber-200 border border-amber-500/20"
                         >
                           {course}
                         </span>
@@ -450,16 +444,16 @@ export function Drawer({
                 </div>
               ))}
 
-              <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06] text-xs text-slate-400 leading-relaxed">
-                <span className="font-semibold text-slate-200">Academic Focus:</span> Building solid fundamentals in computational problem solving, data architecture, and practical engineering implementations.
+              <div className="p-3.5 rounded-xl bg-white/[0.02] border border-white/[0.06] text-xs text-slate-400 leading-relaxed">
+                <span className="font-semibold text-slate-200">Academic Focus:</span> Computer Science & Data Science foundational theory, algorithms, and practical systems development.
               </div>
             </div>
           )}
 
           {/* BRANCH 05: HACKATHONS & EVENTS */}
           {currentBranch.id === 'hackathons' && (
-            <div className="space-y-4">
-              <div className="p-4 rounded-2xl bg-rose-950/20 border border-rose-500/25">
+            <div className="space-y-3">
+              <div className="p-3.5 rounded-2xl bg-rose-950/20 border border-rose-500/25">
                 <div className="flex items-center gap-2 mb-1 text-xs font-mono text-rose-400 font-bold">
                   <Trophy className="w-4 h-4" />
                   <span>Competition Mindset</span>
@@ -469,14 +463,14 @@ export function Drawer({
                 </p>
               </div>
 
-              <div className="space-y-3">
+              <div className="space-y-2.5">
                 {PORTFOLIO_DATA.hackathons.map((hack, idx) => (
                   <div
                     key={idx}
-                    className="p-4 rounded-xl bg-white/[0.03] border border-white/[0.08] hover:border-rose-500/30 transition-colors"
+                    className="p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.08] hover:border-rose-500/30 transition-colors"
                   >
-                    <div className="flex items-center justify-between mb-1.5">
-                      <h4 className="text-sm font-bold text-white">{hack.name}</h4>
+                    <div className="flex items-center justify-between mb-1">
+                      <h4 className="text-xs sm:text-sm font-bold text-white">{hack.name}</h4>
                       <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-rose-950/60 text-rose-300 border border-rose-500/20">
                         {hack.tag}
                       </span>
@@ -495,11 +489,11 @@ export function Drawer({
 
           {/* BRANCH 06: CERTIFICATIONS */}
           {currentBranch.id === 'certifications' && (
-            <div className="space-y-4">
+            <div className="space-y-3">
               {PORTFOLIO_DATA.certifications.map((cert, idx) => (
                 <div
                   key={idx}
-                  className="p-4 rounded-xl bg-white/[0.03] border border-white/[0.08] hover:border-violet-500/30 transition-colors"
+                  className="p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.08] hover:border-violet-500/30 transition-colors"
                 >
                   <div className="flex items-center justify-between mb-1">
                     <span className="text-[10px] font-mono text-violet-400 font-bold">
@@ -509,7 +503,7 @@ export function Drawer({
                       {cert.badgeLabel}
                     </span>
                   </div>
-                  <h4 className="text-sm font-bold text-white mb-1">{cert.title}</h4>
+                  <h4 className="text-xs sm:text-sm font-bold text-white mb-1">{cert.title}</h4>
                   <p className="text-xs text-slate-400 leading-relaxed">
                     {cert.description}
                   </p>
@@ -520,9 +514,9 @@ export function Drawer({
 
           {/* BRANCH 07: CONTACT & CONNECT */}
           {currentBranch.id === 'contact' && (
-            <div className="space-y-6">
-              <div className="p-4 rounded-2xl bg-teal-950/20 border border-teal-500/25">
-                <h4 className="text-sm font-bold text-white mb-1">
+            <div className="space-y-4">
+              <div className="p-3.5 rounded-2xl bg-teal-950/20 border border-teal-500/25">
+                <h4 className="text-xs sm:text-sm font-bold text-white mb-1">
                   Let's Connect
                 </h4>
                 <p className="text-xs text-slate-300 leading-relaxed">
@@ -531,11 +525,11 @@ export function Drawer({
               </div>
 
               {/* Interactive Links */}
-              <div className="space-y-2.5">
-                <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.08] flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-teal-500/15 border border-teal-500/30 flex items-center justify-center text-teal-400">
-                      <Mail className="w-4 h-4" />
+              <div className="space-y-2">
+                <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.08] flex items-center justify-between">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-7 h-7 rounded-lg bg-teal-500/15 border border-teal-500/30 flex items-center justify-center text-teal-400">
+                      <Mail className="w-3.5 h-3.5" />
                     </div>
                     <div>
                       <span className="text-[10px] font-mono text-slate-400 block">Email</span>
@@ -552,9 +546,9 @@ export function Drawer({
                     title="Copy Email"
                   >
                     {copiedEmail ? (
-                      <Check className="w-4 h-4 text-emerald-400" />
+                      <Check className="w-3.5 h-3.5 text-emerald-400" />
                     ) : (
-                      <Copy className="w-4 h-4" />
+                      <Copy className="w-3.5 h-3.5" />
                     )}
                   </button>
                 </div>
@@ -563,11 +557,11 @@ export function Drawer({
                   href={PORTFOLIO_DATA.personal.contactInfo.githubPlaceholder}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.08] hover:border-teal-500/40 flex items-center justify-between transition-colors group"
+                  className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.08] hover:border-teal-500/40 flex items-center justify-between transition-colors group"
                 >
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-200">
-                      <Github className="w-4 h-4" />
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-7 h-7 rounded-lg bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-200">
+                      <Github className="w-3.5 h-3.5" />
                     </div>
                     <div>
                       <span className="text-[10px] font-mono text-slate-400 block">GitHub</span>
@@ -583,11 +577,11 @@ export function Drawer({
                   href={PORTFOLIO_DATA.personal.contactInfo.linkedinPlaceholder}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.08] hover:border-teal-500/40 flex items-center justify-between transition-colors group"
+                  className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.08] hover:border-teal-500/40 flex items-center justify-between transition-colors group"
                 >
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-blue-900/40 border border-blue-700/50 flex items-center justify-center text-blue-300">
-                      <Linkedin className="w-4 h-4" />
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-7 h-7 rounded-lg bg-blue-900/40 border border-blue-700/50 flex items-center justify-center text-blue-300">
+                      <Linkedin className="w-3.5 h-3.5" />
                     </div>
                     <div>
                       <span className="text-[10px] font-mono text-slate-400 block">LinkedIn</span>
@@ -601,29 +595,29 @@ export function Drawer({
               </div>
 
               {/* Direct Quick Message Widget */}
-              <form onSubmit={handleSendMessage} className="space-y-3 pt-2">
-                <span className="text-xs font-mono uppercase tracking-wider text-slate-400 font-bold block">
+              <form onSubmit={handleSendMessage} className="space-y-2.5 pt-1">
+                <span className="text-[11px] font-mono uppercase tracking-wider text-slate-400 font-bold block">
                   Send a Quick Note
                 </span>
                 <input
                   type="text"
-                  placeholder="Subject or Project Topic"
+                  placeholder="Subject or Topic"
                   value={contactSubject}
                   onChange={(e) => setContactSubject(e.target.value)}
-                  className="w-full px-3.5 py-2 rounded-xl bg-slate-900/90 border border-slate-700 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-teal-400"
+                  className="w-full px-3 py-2 rounded-xl bg-slate-900/90 border border-slate-700 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-teal-400"
                   required
                 />
                 <textarea
-                  rows={3}
+                  rows={2}
                   placeholder="Your message..."
                   value={contactMessage}
                   onChange={(e) => setContactMessage(e.target.value)}
-                  className="w-full px-3.5 py-2 rounded-xl bg-slate-900/90 border border-slate-700 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-teal-400 resize-none"
+                  className="w-full px-3 py-2 rounded-xl bg-slate-900/90 border border-slate-700 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-teal-400 resize-none"
                   required
                 />
                 <button
                   type="submit"
-                  className="w-full inline-flex items-center justify-center gap-2 py-2.5 rounded-xl bg-teal-600 hover:bg-teal-500 text-white font-semibold text-xs shadow-md shadow-teal-950/60 border border-teal-400/30 transition-colors cursor-pointer"
+                  className="w-full inline-flex items-center justify-center gap-2 py-2 rounded-xl bg-teal-600 hover:bg-teal-500 text-white font-semibold text-xs shadow-md shadow-teal-950/60 border border-teal-400/30 transition-colors cursor-pointer"
                 >
                   <Send className="w-3.5 h-3.5" />
                   <span>{messageSent ? 'Message Queued!' : 'Send Message'}</span>
@@ -634,25 +628,25 @@ export function Drawer({
         </div>
 
         {/* ========================================================
-            FOOTER NAVIGATION
+            STICKY BOTTOM NAVIGATION
            ======================================================== */}
-        <div className="px-6 py-3.5 bg-[#090d1a] border-t border-white/[0.08] flex items-center justify-between text-xs shrink-0">
+        <div className="p-3 border-t border-cyan-500/10 bg-slate-950/80 backdrop-blur-md shrink-0 flex items-center justify-between text-xs">
           <button
             onClick={() => onSelectBranch(prevBranch.id)}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] text-slate-300 font-semibold border border-white/[0.08] transition-colors cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] text-slate-300 font-semibold border border-white/[0.08] transition-colors cursor-pointer text-xs"
             title={`Previous: ${prevBranch.name}`}
           >
-            <ChevronLeft className="w-4 h-4" />
+            <ChevronLeft className="w-3.5 h-3.5" />
             <span>&lt; {prevBranch.name}</span>
           </button>
 
           <button
             onClick={() => onSelectBranch(nextBranch.id)}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold border border-blue-400/30 transition-colors cursor-pointer shadow-sm shadow-blue-950/50"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-semibold border border-cyan-400/30 transition-colors cursor-pointer shadow-sm text-xs"
             title={`Next: ${nextBranch.name}`}
           >
             <span>{nextBranch.name} &gt;</span>
-            <ChevronRight className="w-4 h-4" />
+            <ChevronRight className="w-3.5 h-3.5" />
           </button>
         </div>
       </aside>

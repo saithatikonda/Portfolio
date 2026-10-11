@@ -154,7 +154,7 @@ export function Tree({
   return (
     <section
       id="tree"
-      className="relative min-h-screen py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto flex flex-col items-center justify-center transition-all duration-500 ease-out"
+      className="relative min-h-fit md:min-h-screen py-10 md:py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto flex flex-col items-center justify-start md:justify-center transition-all duration-500 ease-out"
     >
       {/* Background Bioluminescent Nebula Glows */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[550px] bg-gradient-to-tr from-cyan-600/10 via-blue-600/10 to-indigo-600/15 rounded-full blur-[140px] pointer-events-none -z-10" />
