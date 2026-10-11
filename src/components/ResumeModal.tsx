@@ -40,7 +40,7 @@ HACKATHONS & TECHNICAL EVENTS
 -----------------------------------------------------
 - Smart India Hackathon (SIH)
 - Zignasa
-- Ignia
+- Ignisia
 - SAE (Society of Automotive Engineers)
 - Other Technical Events
 Statement: "${PORTFOLIO_DATA.hackathonsStatement}"

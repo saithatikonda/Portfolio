@@ -18,7 +18,7 @@ export function Hero({
   const { personal } = PORTFOLIO_DATA;
   const [imageError, setImageError] = useState(false);
 
-  const techStack = ['C', 'Python', 'Java', 'Arduino', 'DSA', 'DBMS'];
+  const techStack = ['C', 'Python', 'Java', 'Arduino', 'DSA', 'DBMS', 'SQL'];
   const profileSrc = customPhotoUrl || '/profile.jpg';
 
   return (

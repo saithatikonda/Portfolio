@@ -135,7 +135,13 @@ export const PORTFOLIO_DATA = {
         {
           name: "DBMS",
           description: "Relational databases, SQL queries, normalization, ACID transactions, ER modeling, and data integrity.",
-          tags: ["Relational Schemas", "SQL Queries", "Normalization"],
+          tags: ["Relational Schemas", "ACID Properties", "Normalization"],
+          iconName: "Database"
+        },
+        {
+          name: "SQL",
+          description: "Declarative database queries, complex multi-table joins, subqueries, schema indexing, and aggregations.",
+          tags: ["Queries & Joins", "Aggregation", "Indexing", "Data Modeling"],
           iconName: "Database"
         }
       ]
@@ -282,7 +288,7 @@ export const PORTFOLIO_DATA = {
       tag: "Technical Challenge"
     },
     {
-      name: "Ignia",
+      name: "Ignisia",
       type: "Technical Innovation Festival",
       focus: "Project building, design sprints & technical hackathon",
       learnings:

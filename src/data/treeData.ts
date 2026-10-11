@@ -130,7 +130,7 @@ export const TREE_BRANCHES: BranchNode[] = [
       gradient: 'from-rose-400 to-pink-600',
     },
     iconName: 'Trophy',
-    leaves: ['Smart India Hackathon', 'Zignasa', 'Ignia', 'SAE Engineering'],
+    leaves: ['Smart India Hackathon', 'Zignasa', 'Ignisia', 'SAE Engineering'],
     description: 'Intense technical sprints and symposiums sharpening teamwork and fast prototyping.',
   },
   {

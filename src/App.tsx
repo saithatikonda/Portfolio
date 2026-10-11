@@ -7,7 +7,6 @@ import { useState, useEffect } from 'react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { Tree } from './components/Tree';
-import { Drawer } from './components/Drawer';
 import { Footer } from './components/Footer';
 import { ResumeModal } from './components/ResumeModal';
 import { PhotoUploadModal } from './components/PhotoUploadModal';
@@ -15,9 +14,8 @@ import { ProjectDetailModal } from './components/ProjectDetailModal';
 import { ProjectItem } from './data/portfolioData';
 
 export default function App() {
-  // Navigation & branch drawer state
+  // Navigation & branch state
   const [activeBranch, setActiveBranch] = useState<string | null>(null);
-  const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
   const [resumeModalOpen, setResumeModalOpen] = useState<boolean>(false);
   const [photoModalOpen, setPhotoModalOpen] = useState<boolean>(false);
   const [selectedProject, setSelectedProject] = useState<ProjectItem | null>(null);
@@ -61,13 +59,12 @@ export default function App() {
     }
   };
 
-  // Branch Selection: Opens the slide-out drawer
+  // Branch Selection: In-place vertical expansion (clicking active closes it)
   const handleSelectBranch = (branchId: string) => {
-    setActiveBranch(branchId);
-    setIsDrawerOpen(true);
+    setActiveBranch((prev) => (prev === branchId ? null : branchId));
   };
 
-  // Smooth scroll to Screen 2: The Cyber Tree
+  // Smooth scroll to Screen 2: The Knowledge & Project Tree
   const handleExploreJourney = () => {
     const treeElement = document.getElementById('tree');
     if (treeElement) {
@@ -87,9 +84,8 @@ export default function App() {
       return;
     }
 
-    // Direct branch click: scroll to tree and slide open details drawer
+    // Direct branch click: scroll to tree and expand that branch in-place
     setActiveBranch(sectionId);
-    setIsDrawerOpen(true);
     const el = document.getElementById('tree');
     if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
@@ -115,7 +111,7 @@ export default function App() {
         />
 
         {/* ========================================================
-            SCREEN 2: THE INTERACTIVE CYBER-TREE HUB
+            SCREEN 2: THE INTERACTIVE KNOWLEDGE TREE (IN-PLACE ACCORDION)
            ======================================================== */}
         <div className="w-full bg-gradient-to-b from-[#060913] via-[#0b0f1d] to-[#060913] border-t border-white/[0.06]">
           <Tree
@@ -124,20 +120,10 @@ export default function App() {
             onOpenResume={() => setResumeModalOpen(true)}
             onOpenPhotoModal={() => setPhotoModalOpen(true)}
             customPhotoUrl={customPhotoUrl}
-            isDrawerOpen={isDrawerOpen}
+            onSelectProject={(project) => setSelectedProject(project)}
           />
         </div>
       </main>
-
-      {/* Slide-Out Drawer (Replaces the horizontal carousel) */}
-      <Drawer
-        isOpen={isDrawerOpen}
-        activeBranchId={activeBranch}
-        onClose={() => setIsDrawerOpen(false)}
-        onSelectBranch={(id) => setActiveBranch(id)}
-        onSelectProject={(project) => setSelectedProject(project)}
-        onOpenResume={() => setResumeModalOpen(true)}
-      />
 
       {/* Footer */}
       <Footer />
