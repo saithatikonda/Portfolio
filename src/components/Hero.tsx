@@ -1,179 +1,198 @@
-import { useState, useEffect } from 'react';
-import { ArrowDown, FileText, Camera, Code2, Terminal } from 'lucide-react';
+import { Download, ArrowDown, Camera, Sparkles } from 'lucide-react';
 import { PORTFOLIO_DATA } from '../data/portfolioData';
 
 interface HeroProps {
   onOpenResume: () => void;
   onOpenPhotoModal: () => void;
   customPhotoUrl: string | null;
-  onViewProjects?: () => void;
+  onExploreJourney: () => void;
 }
 
-export function Hero({ onOpenResume, onOpenPhotoModal, customPhotoUrl, onViewProjects }: HeroProps) {
+export function Hero({
+  onOpenResume,
+  onOpenPhotoModal,
+  customPhotoUrl,
+  onExploreJourney,
+}: HeroProps) {
   const { personal } = PORTFOLIO_DATA;
 
+  const techStack = ['C', 'Python', 'Java', 'Arduino', 'DSA', 'DBMS'];
+
   return (
-    <section id="home" className="relative w-full pt-16 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto flex items-center justify-center">
-      
-      {/* Background ambient lighting */}
-      <div className="absolute top-1/3 left-1/3 w-[600px] h-[350px] bg-blue-600/10 rounded-full blur-3xl pointer-events-none -z-10" />
+    <section
+      id="home"
+      className="relative min-h-[calc(100vh-4rem)] flex items-center justify-center py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden"
+    >
+      {/* Subtle Glowing Radial Nebula Lights */}
+      <div className="absolute -top-24 left-1/4 w-[520px] h-[520px] bg-cyan-500/10 rounded-full blur-[130px] pointer-events-none -z-10" />
+      <div className="absolute bottom-10 right-1/4 w-[580px] h-[580px] bg-blue-600/10 rounded-full blur-[140px] pointer-events-none -z-10" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-indigo-500/5 rounded-full blur-[150px] pointer-events-none -z-10" />
 
       <div className="w-full">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-          
-          {/* Left Column: Core Identity */}
-          <div className="lg:col-span-7 flex flex-col items-start text-left">
-            
-            {/* Clean Unboxed Metadata Line (No Pill Capsules) */}
-            <div className="flex flex-wrap items-center gap-2 text-xs font-mono text-slate-400 mb-6">
-              <span className="text-sky-300 font-semibold">{personal.badge}</span>
-              <span className="text-slate-600" aria-hidden="true">·</span>
-              <div className="flex items-center gap-1.5 text-emerald-400">
+          {/* ========================================================
+              LEFT COLUMN: HERO & IDENTITY
+             ======================================================== */}
+          <div className="lg:col-span-7 flex flex-col items-start text-left z-10">
+            {/* Small Pill Tag */}
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-mono font-medium bg-[#0f172a]/80 text-slate-300 border border-cyan-500/30 shadow-md shadow-cyan-950/40 mb-6 backdrop-blur-md">
+              <span className="text-slate-300">CSD Student • Developer • Hackathon Enthusiast</span>
+              <span className="text-slate-500" aria-hidden="true">•</span>
+              <span className="inline-flex items-center gap-1.5 text-emerald-400 font-semibold">
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                 </span>
-                <span>{personal.statusBadge}</span>
-              </div>
+                <span>Open to Opportunities</span>
+              </span>
             </div>
 
-            {/* Display Headline */}
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-[1.08] mb-4 text-balance">
+            {/* Large Display Heading */}
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-[1.08] mb-4">
               <span className="block text-slate-400 text-2xl sm:text-3xl md:text-4xl font-semibold mb-1">
-                {personal.heroHeadingPrefix}
+                Hi, I'm
               </span>
-              <span className="bg-gradient-to-r from-blue-400 via-sky-300 to-cyan-300 bg-clip-text text-transparent">
-                {personal.heroHeadingName}
+              <span className="bg-gradient-to-r from-cyan-300 via-sky-300 to-blue-400 bg-clip-text text-transparent drop-shadow-[0_0_30px_rgba(56,189,248,0.35)]">
+                {personal.fullName}
               </span>
             </h1>
 
             {/* Subtitle */}
-            <p className="text-lg sm:text-xl md:text-2xl font-medium text-sky-200/90 mb-5 tracking-tight">
-              {personal.heroSubtitle}
+            <p className="text-lg sm:text-xl md:text-2xl font-medium text-sky-200/90 mb-4 tracking-tight">
+              Computer Science & Data Science Student
             </p>
 
-            {/* Concise Description */}
+            {/* Summary */}
             <p className="text-base sm:text-lg text-slate-300 leading-relaxed max-w-xl mb-8">
-              {personal.heroDescription}
+              I build practical software projects, explore emerging technologies, and strengthen my problem-solving skills through coding and hackathons.
             </p>
 
             {/* Action Buttons */}
-            <div className="flex flex-wrap items-center gap-4 w-full sm:w-auto">
+            <div className="flex flex-wrap items-center gap-4 w-full sm:w-auto mb-10">
+              {/* Primary CTA */}
               <button
-                onClick={onViewProjects}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-sm font-semibold text-white bg-blue-600 hover:bg-blue-500 active:bg-blue-700 shadow-md shadow-blue-600/30 border border-blue-400/40 transition-all cursor-pointer group"
+                onClick={onExploreJourney}
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-600 hover:from-cyan-500 hover:to-indigo-500 active:scale-95 shadow-lg shadow-cyan-950/60 border border-cyan-400/40 transition-all duration-200 cursor-pointer group"
               >
-                <span>View Projects</span>
-                <ArrowDown className="w-4 h-4 text-sky-200 group-hover:translate-y-0.5 transition-transform" />
+                <span>Explore My Journey</span>
+                <ArrowDown className="w-4 h-4 text-cyan-200 group-hover:translate-y-1 transition-transform" />
               </button>
 
+              {/* Secondary CTA */}
               <button
                 onClick={onOpenResume}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-sm font-semibold text-slate-200 surface-card hover:bg-slate-800 hover:text-white border border-white/[0.08] hover:border-sky-500/40 transition-all cursor-pointer"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-sm font-semibold text-slate-200 bg-slate-900/80 hover:bg-slate-800 hover:text-white border border-slate-700 hover:border-cyan-400/40 transition-all duration-200 cursor-pointer backdrop-blur-md active:scale-95 shadow-md shadow-black/40"
               >
-                <FileText className="w-4 h-4 text-sky-400" />
+                <Download className="w-4 h-4 text-cyan-400" />
                 <span>Download Resume</span>
               </button>
             </div>
 
-            {/* Core Stack Unboxed Line */}
-            <div className="mt-10 pt-6 border-t border-white/[0.08] w-full flex flex-wrap items-center gap-3 text-xs text-slate-400 font-mono">
-              <span className="text-slate-500 font-semibold uppercase tracking-wider">Stack:</span>
-              <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-                {['C', 'Python', 'Java', 'Arduino', 'DSA', 'DBMS'].map((item, idx) => (
-                  <span key={item} className="flex items-center gap-1.5">
-                    <span className="text-slate-200">{item}</span>
-                    {idx < 5 && <span className="text-slate-600" aria-hidden="true">·</span>}
+            {/* Tech Stack Footer Tags */}
+            <div className="pt-6 border-t border-white/[0.08] w-full flex flex-wrap items-center gap-3 text-xs text-slate-400 font-mono">
+              <span className="text-slate-500 font-semibold uppercase tracking-wider">Tech Stack:</span>
+              <div className="flex flex-wrap items-center gap-2">
+                {techStack.map((tech) => (
+                  <span
+                    key={tech}
+                    className="px-2.5 py-1 rounded-md bg-slate-900/90 text-cyan-300 border border-slate-800 font-medium hover:border-cyan-500/30 transition-colors"
+                  >
+                    {tech}
                   </span>
                 ))}
               </div>
             </div>
-
           </div>
 
-          {/* Right Column: Polished Profile Image Area */}
-          <div className="lg:col-span-5 flex justify-center lg:justify-end">
+          {/* ========================================================
+              RIGHT COLUMN: GLASSMORPHIC ID CARD
+             ======================================================== */}
+          <div className="lg:col-span-5 flex justify-center lg:justify-end z-10">
             <div className="relative w-full max-w-sm">
-              
-              {/* Radial Lighting behind container */}
-              <div className="absolute -inset-4 bg-gradient-to-tr from-blue-600/30 via-sky-500/20 to-transparent rounded-3xl blur-2xl opacity-60 -z-10" />
+              {/* Backlight Glow behind Glassmorphic Card */}
+              <div className="absolute -inset-4 bg-gradient-to-tr from-cyan-500/25 via-blue-600/20 to-transparent rounded-3xl blur-2xl opacity-75 -z-10" />
 
-              {/* Main Card */}
-              <div className="surface-card rounded-2xl p-6 border border-white/[0.08] shadow-2xl">
-                
-                {/* Image / Monogram Container */}
-                <div className="relative w-56 h-56 mx-auto rounded-2xl overflow-hidden mb-6 bg-slate-900 border border-sky-400/30 shadow-inner flex items-center justify-center group">
+              {/* Glassmorphic ID Card */}
+              <div className="relative rounded-2xl p-6 sm:p-7 bg-[#0b0f1d]/85 backdrop-blur-2xl border border-white/[0.12] shadow-2xl shadow-black/80">
+                {/* Decorative Top Pill */}
+                <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+                    <span className="text-[11px] font-mono uppercase tracking-widest text-slate-400 font-semibold">
+                      ENGINEERING ID CARD
+                    </span>
+                  </div>
+                  <Sparkles className="w-4 h-4 text-cyan-400" />
+                </div>
+
+                {/* Circular / Rounded Portrait Badge with Glowing Pulsing Border */}
+                <div className="relative w-44 h-44 sm:w-48 sm:h-48 mx-auto rounded-full overflow-hidden mb-6 bg-slate-950 border-2 border-cyan-400/60 shadow-[0_0_30px_rgba(56,189,248,0.3)] flex items-center justify-center group ring-4 ring-cyan-500/20">
                   {customPhotoUrl ? (
                     <img
                       src={customPhotoUrl}
-                      alt="Thatikonda Sai Shiva Kumar - Profile"
+                      alt="Thatikonda Sai Shiva Kumar - Portrait"
                       referrerPolicy="no-referrer"
                       className="w-full h-full object-cover"
                     />
                   ) : (
-                    <div className="w-full h-full flex flex-col items-center justify-center p-6 text-center relative bg-gradient-to-b from-slate-900 via-slate-950 to-black">
-                      <div className="w-20 h-20 rounded-2xl bg-blue-600/20 border border-sky-400/40 flex items-center justify-center mb-3">
-                        <span className="text-2xl font-black text-sky-300 tracking-wider">
+                    <div className="w-full h-full flex flex-col items-center justify-center p-4 text-center bg-gradient-to-b from-slate-900 via-slate-950 to-black">
+                      <div className="w-16 h-16 rounded-full bg-cyan-500/15 border border-cyan-400/40 flex items-center justify-center mb-2 shadow-inner">
+                        <span className="text-2xl font-black text-cyan-300 tracking-wider">
                           SSK
                         </span>
                       </div>
-                      <p className="text-xs font-semibold text-slate-200">
-                        Profile Image Area
-                      </p>
-                      <p className="text-[11px] text-slate-500 mt-0.5">
-                        Click to upload your portrait
+                      <p className="text-[11px] text-slate-400 font-mono">
+                        Portrait Badge
                       </p>
                     </div>
                   )}
 
+                  {/* Photo Upload / Change overlay button */}
                   <button
                     onClick={onOpenPhotoModal}
                     className="absolute inset-0 bg-slate-950/80 backdrop-blur-xs flex flex-col items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer p-4 text-center"
                     title="Upload or change photo"
                   >
-                    <Camera className="w-6 h-6 text-sky-400 mb-1" />
-                    <span className="text-xs font-semibold text-sky-200">
-                      {customPhotoUrl ? 'Change Photo' : 'Upload Photo'}
+                    <Camera className="w-5 h-5 text-cyan-400 mb-1" />
+                    <span className="text-[11px] font-semibold text-cyan-200">
+                      {customPhotoUrl ? 'Change Portrait' : 'Upload Portrait'}
                     </span>
                   </button>
                 </div>
 
-                {/* Identity Text */}
-                <div className="text-center">
-                  <h3 className="text-lg font-bold text-white tracking-tight">
+                {/* Name */}
+                <div className="text-center mb-6">
+                  <h3 className="text-xl font-extrabold text-white tracking-tight">
                     Thatikonda Sai Shiva Kumar
                   </h3>
-                  <p className="text-xs font-mono text-sky-400 mt-1">
-                    Computer Science & Data Science
+                  <p className="text-xs font-mono text-cyan-400 mt-1">
+                    Undergraduate Engineer
                   </p>
                 </div>
 
-                {/* Micro indicators bar */}
-                <div className="mt-5 pt-4 border-t border-white/[0.08] grid grid-cols-2 gap-3 text-left">
-                  <div className="p-2.5 rounded-xl bg-white/[0.02] border border-white/[0.06]">
-                    <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500 block">
+                {/* Mini Statistic Cards */}
+                <div className="grid grid-cols-2 gap-3 pt-4 border-t border-white/[0.08]">
+                  <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] text-left">
+                    <span className="text-[10px] font-mono uppercase tracking-wider text-slate-400 block">
                       Discipline
                     </span>
-                    <span className="text-xs font-semibold text-slate-200 mt-0.5 block">
+                    <span className="text-xs font-semibold text-slate-100 mt-1 block">
                       CS & Data Science
                     </span>
                   </div>
 
-                  <div className="p-2.5 rounded-xl bg-white/[0.02] border border-white/[0.06]">
-                    <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500 block">
+                  <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] text-left">
+                    <span className="text-[10px] font-mono uppercase tracking-wider text-slate-400 block">
                       Focus
                     </span>
-                    <span className="text-xs font-semibold text-slate-200 mt-0.5 block">
+                    <span className="text-xs font-semibold text-slate-100 mt-1 block">
                       Practical Software
                     </span>
                   </div>
                 </div>
-
               </div>
-
             </div>
           </div>
-
         </div>
       </div>
     </section>
